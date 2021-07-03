@@ -40,4 +40,6 @@ body {
     background-color: var(--bs-white);
 } 
 
-
+.forecastBox {
+    background-color: var(--bs-cyan);
+}
