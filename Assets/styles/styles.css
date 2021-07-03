@@ -36,10 +36,23 @@ body {
 }
 
  #sideSearch{
-
+    
     background-color: var(--bs-white);
 } 
 
+#todayInfo {
+    border: solid var(--bs-gray-dark);
+}
+
 .forecastBox {
-    background-color: var(--bs-cyan);
+    background-color: var(--bs-purple);
+}
+
+.fivedayHeaders {
+    background-color: var(--bs-white);
+    color: var(--bs-gray-dark);
+}
+
+.box {
+    color: var(--bs-white);
 }
