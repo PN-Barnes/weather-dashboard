@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Weather Tracker</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
+        <link
+        rel="stylesheet"
+        href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
+        />
+        <link rel="stylesheet" href="Assets/styles/styles.css">
+
+    </head>
+
+    <body>
+        <header>
+            <div class="container-fluid my-auto">
+                <h1 class=" display-2 text-center fw-bolder" href="#">Weather Dashboard</h1>
+            </div>
+        </header>
+        <main>
+            <div class="container-fluid">
+                <div class="row content">
+                    <div class="col-sm-3 sidenav h-100" id="sideSearch">
+                        <h4>John's Blog</h4>
+                        <div class="input-group input-group-lg mb-3">
+                            <input type="text" class="form-control col-9" placeholder="Search for a city" aria-label="Search for a city" aria-describedby="button-addon2">
+                            <button class="btn btn-outline-secondary btn-lg col-3" type="button" id="button-addon2"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16" id="searchIcon">
+                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                              </svg></button>
+                        </div>
+                    </div>
+                    
+                    <div class="col-9 jumbotron">
+                        <div id="todayInfo" class="container-fluid">
+                            <h1 class="display-3"> City date icon</h1>
+                            <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+                            <p class="lead">Temperature:</p>
+                            <p>Humidity:</p>
+                            <p>Wind Speed:</p>
+                            <p>UV Index:</p>
+                        </div>
+                        
+                        <div id="fiveForecast" class="container-fluid">
+                            <h2 class="col-12  justify-content-center">Five day Forecast:
+                            </h2>
+                        </div>
+                        <div class="container-fluid col-12">
+                        <div class="row">
+                            <div >
+                                <h3>Date: </h3>
+                                <p>information</p>
+                            </div>
+                            <div>
+                                <h3 >Date: </h3>
+                                <p>information</p>
+                            </div>
+                            <div>
+                                <h3>Date: </h3>
+                                <p>information</p>
+                            </div>
+                            <div>
+                                <h3>Date: </h3>
+                                <p>information</p>
+                            </div>
+                            <div>
+                                <h3>Date: </h3>
+                                <p>information</p>
+                            </div>
+                            <div>
+                                <h3>Date: </h3>
+                                <p>information</p>
+                            </div>
+                        </div>
+                        </div>
+                        </div>
+                    </div>
+                    
+
+                </div>
+            </div>
+        </main>
+    </body>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="./Assets/js/searchPage.js"></script>
+</html>
