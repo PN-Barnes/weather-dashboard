@@ -2,6 +2,8 @@ var searchButton = document.getElementById('button-addon2');
 var todayInfo  = document.getElementById('todayInfo')
 var fiveForecastContainer = document.getElementById('fiveContent')
 var inputKey = document.getElementById('inputKey');
+var apiKey = 'dae35eafecabbca38e28c2fc1f8371c6'
+
 function getApi() {
 
 
@@ -20,7 +22,7 @@ function getApi() {
 // }
 
 
-fetch(`https://api.openweathermap.org/data/2.5/weather?q=${inputKey.value}`)
+fetch(`https://api.openweathermap.org/data/2.5/weather?q=${inputKey.value}&appid=dae35eafecabbca38e28c2fc1f8371c6`)
   .then(function (response) {
     return response.json();
   })
@@ -33,6 +35,7 @@ fetch(`https://api.openweathermap.org/data/2.5/weather?q=${inputKey.value}`)
 
 searchButton.addEventListener('click', getApi);
 
-// https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude={part}&appid={API key}
+// https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude={part}&appid=dae35eafecabbca38e28c2fc1f8371c6
+
 
 // 
