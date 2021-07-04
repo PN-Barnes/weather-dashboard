@@ -6,22 +6,6 @@ var apiKey = 'dae35eafecabbca38e28c2fc1f8371c6'
 
 function getApi() {
 
-
-//     var requestUrl = ''
-
-//     fetch(requestUrl)
-    
-//     .then(function (response) {
-//         console.log("response", response)
-
-//         return response.json();
-//     })
-//     .then(function (data) {
-//         console.log("data", data)
-//     })
-// }
-
-
 fetch(`https://api.openweathermap.org/data/2.5/weather?q=${inputKey.value}&appid=dae35eafecabbca38e28c2fc1f8371c6`)
   .then(function (response) {
     return response.json();
@@ -34,8 +18,3 @@ fetch(`https://api.openweathermap.org/data/2.5/weather?q=${inputKey.value}&appid
 }
 
 searchButton.addEventListener('click', getApi);
-
-// https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude={part}&appid=dae35eafecabbca38e28c2fc1f8371c6
-
-
-// 
