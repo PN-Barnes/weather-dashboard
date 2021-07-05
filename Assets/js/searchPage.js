@@ -14,23 +14,22 @@ var todayIcon = document.getElementById('icon')
 var searchHistory = document.getElementById('previousCitySearch')
 console.log(currentDay);
 
+// ------------------------ retrieve weather data from API --------------------
 
-function getApi() {
+function getApi(input) { //
 
-  createSearchHistory()
+  input = inputKey.value // 
+  createSearchHistory() // --Save the input into the search column for future reference
 
-  fetch(`https://api.openweathermap.org/data/2.5/weather?q=${inputKey.value}&appid=dae35eafecabbca38e28c2fc1f8371c6&units=imperial`)
+  fetch(`https://api.openweathermap.org/data/2.5/weather?q=${input}&appid=dae35eafecabbca38e28c2fc1f8371c6&units=imperial`)
   .then(function (response) {
     return response.json();
   })
   .then(function (data) {
-    console.log(`${inputKey.value} raw data: `);
-    //We need to examine the API response to know how to access the data we want to extract.
-    
-    
+    console.log(`${input} raw data: `);
     
 
-    searchCity.textContent = inputKey.value;
+    searchCity.textContent = input; //
     todayDate.textContent = currentDay;
     todayTemp.textContent = 'Temperature: ' + data.main.temp;
     todayHumidity.textContent = 'Humidity: ' + data.main.humidity +'%';
@@ -38,26 +37,28 @@ function getApi() {
     todayIcon = data.weather[0].icon;
     console.log(todayIcon)
   })
+
+  
 }
 
 
 
-
+// whenever side bar item clicked, value runs through getAPI
 searchHistory.onclick = function(event) {
-  let target = event.target;
-  inputKey.value = target;
-  var newInput = inputKey.value
-  console.log(newInput)
-  getApi( )
-}
+  console.log(event.target.textContent)
+  inputKey.value = event.target.textContent
+  getApi()
+}  
 // var savedCitySearch = localStorage.getItem('searchHistory')
 
-function createSearchHistory(citySearch) {
+
+// save input to side column and store within local storage
+function createSearchHistory() {
 
   createCity = document.createElement('button')
   createCity.textContent = inputKey.value
   createCity.setAttribute("class", "btn btn-outline-secondary btn-lg col-12")
-  console.log(createCity)
+  console.log(createCity.value)
   searchHistory.appendChild(createCity)
 
 
