@@ -11,10 +11,13 @@ var todayHumidity = document.getElementById('todayHumidity')
 var todayWind = document.getElementById('todayWind')
 var todayUV = document.getElementById('todayUV')
 var todayIcon = document.getElementById('icon')
+var searchHistory = document.getElementById('previousCitySearch')
 console.log(currentDay);
 
 
 function getApi() {
+
+  createSearchHistory()
 
   fetch(`https://api.openweathermap.org/data/2.5/weather?q=${inputKey.value}&appid=dae35eafecabbca38e28c2fc1f8371c6&units=imperial`)
   .then(function (response) {
@@ -23,6 +26,9 @@ function getApi() {
   .then(function (data) {
     console.log(`${inputKey.value} raw data: `);
     //We need to examine the API response to know how to access the data we want to extract.
+    
+    
+    
 
     searchCity.textContent = inputKey.value;
     todayDate.textContent = currentDay;
@@ -32,6 +38,33 @@ function getApi() {
     todayIcon = data.weather[0].icon;
     console.log(todayIcon)
   })
+}
+
+
+
+
+searchHistory.onclick = function(event) {
+  let target = event.target;
+  inputKey.value = target;
+  var newInput = inputKey.value
+  console.log(newInput)
+  getApi( )
+}
+// var savedCitySearch = localStorage.getItem('searchHistory')
+
+function createSearchHistory(citySearch) {
+
+  createCity = document.createElement('button')
+  createCity.textContent = inputKey.value
+  createCity.setAttribute("class", "btn btn-outline-secondary btn-lg col-12")
+  console.log(createCity)
+  searchHistory.appendChild(createCity)
+
+
+
+  localStorage.setItem('searchHistoy', createCity)
+
+  localStorage
 }
 
 searchButton.addEventListener('click', getApi);
