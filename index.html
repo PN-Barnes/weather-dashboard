@@ -41,12 +41,12 @@
 <!--------------------------- TOP OF JUMBOTRON -------------------------------->
                 <div class="col-10 jumbotron rounded">
                     <div id="todayInfo" class="container-fluid">
-                        <h1 class="display-3"> City date icon</h1>
-                        <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-                        <p class="lead">Temperature:</p>
-                        <p>Humidity:</p>
-                        <p>Wind Speed:</p>
-                        <p>UV Index:</p>
+                        <h1 class="display-3"> <span id="city"></span> <span id="Date"></span> <span id="icon"></span></h1>
+                        <p class="lead"></p>
+                        <p class="lead" id="todayTemp">Temperature:</p>
+                        <p id="todayHumidity">Humidity:</p>
+                        <p id="todayWind">Wind Speed:</p>
+                        <p id="todayUV">UV Index:</p>
                     </div>
                     
 <!---------------------------------- BOTTOM OF JUMBOTRON -------------------------------->
@@ -105,5 +105,6 @@
     </body>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
     <script src="./Assets/js/searchPage.js"></script>
 </html>
