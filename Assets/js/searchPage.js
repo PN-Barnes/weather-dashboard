@@ -13,25 +13,33 @@ var todayUV = document.getElementById('todayUV')
 var todayIcon = document.getElementById('icon')
 var searchHistory = document.getElementById('previousCitySearch')
 console.log(currentDay);
+var retrieveDate;
+var forecastDates = []
+var forecastRow = document.getElementById('contentRow')
+
+
+
+
+
 
 // ------------------------ retrieve weather data from API --------------------
 
 
 
 
-function getApi(input) { //
-  input = inputKey.value //
+function getApi() { //
+  
   createSearchHistory() // --Save the input into the search column for future reference
   
-  fetch(`https://api.openweathermap.org/data/2.5/weather?q=${input}&appid=dae35eafecabbca38e28c2fc1f8371c6&units=imperial`)
+  fetch(`https://api.openweathermap.org/data/2.5/weather?q=${inputKey.value}&appid=dae35eafecabbca38e28c2fc1f8371c6&units=imperial`)
   .then(function (response) {
     return response.json();
   })
   .then(function (data) {
-    console.log(`${input} raw data: `)
-    console.log(typeof input)
+    console.log(`${inputKey.value} raw data: `)
+    console.log(data)
     
-    searchCity.textContent = input; //
+    searchCity.textContent = inputKey.value; //
     todayDate.textContent = currentDay;
     todayTemp.textContent = 'Temperature: ' + data.main.temp;
     todayHumidity.textContent = 'Humidity: ' + data.main.humidity +'%';
@@ -41,6 +49,67 @@ function getApi(input) { //
   })
   
   
+}
+
+function makeDate(){
+  for (i=1; i < 6; i++) {
+    retrieveDate = moment().add(i,"days").format('MM/DD/YY')
+    console.log(retrieveDate);
+  }
+}
+
+function getApi5day() {
+  input = inputKey.value
+  fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${input}&appid=dae35eafecabbca38e28c2fc1f8371c6&units=imperial`)
+  .then(function (response) {
+    console.log(response)
+    return response.json();
+
+  })
+  .then(function (data) {
+    console.log(`${inputKey.value} five day forecast`)
+    console.log(data)
+// creates the next five dates from today
+    var count = 0
+    for(i=0; i<5; i++) {
+      count= count + 1
+      console.log(count)
+      retrieveDate = moment().add(count,"days").format('MM/DD/YY');
+      console.log(typeof retrieveDate)
+      console.log(retrieveDate);
+      forecastDates.push(retrieveDate)
+    }
+    var arrayIndex = 0
+  // CREATE THE CONTENT BOXES FOR THE FIVE DAY FORECAST W/ INFORMATION.
+    for( i = 0; i < 40 ; i += 8) {
+        
+      
+      
+      
+      var createDate = document.createElement('h3')
+      createDate.setAttribute('class', 'text-center border border-4 fivedayHeaders')
+      createDate.textContent = forecastDates[arrayIndex]
+      console.log(createDate.textContent)
+      var createDay = document.createElement('div')
+      createDay.setAttribute("class", 'col border border-4 forecastBox rounded box')
+      var createTemp = document.createElement('p')
+      createTemp.textContent = 'Temperature: ' + data.list[i].main.temp + ' Fahrenheit'
+      console.log(createTemp)
+      var createHumidity = document.createElement('p')
+      createHumidity.textContent = 'Humidity: ' + data.list[i].main.humidity + '%'
+      console.log(createHumidity)
+
+      forecastRow.appendChild(createDay)
+      createDay.appendChild(createDate)
+      createDay.appendChild(createTemp)
+      createDay.appendChild(createHumidity)
+
+
+      arrayIndex++ // increment the index number to grab next date
+    }
+  })
+
+
 }
 
 
@@ -70,5 +139,5 @@ function createSearchHistory() {
 }
 
 searchButton.addEventListener('click', getApi);
-
+searchButton.addEventListener('click', getApi5day)
 
