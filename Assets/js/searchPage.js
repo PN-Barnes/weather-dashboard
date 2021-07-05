@@ -26,11 +26,24 @@ var forecastRow = document.getElementById('contentRow')
 
 
 
+function getUVindex(input1, input2) {  
+  fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${input1}&lon=${input2}&appid=dae35eafecabbca38e28c2fc1f8371c6`)
+  .then(function (response) {
+    return response.json();
+  })
+  .then(function (data) {
+    console.log(data)
+    var UVindex = data.current.uvi
+    todayUV.textContent = 'UV index: ' + UVindex; 
+    return UVindex;
+  })
+}
 
+// Get Data for inputKey.value
 function getApi() { //
   
   createSearchHistory() // --Save the input into the search column for future reference
-  
+  //getUVindex()
   fetch(`https://api.openweathermap.org/data/2.5/weather?q=${inputKey.value}&appid=dae35eafecabbca38e28c2fc1f8371c6&units=imperial`)
   .then(function (response) {
     return response.json();
@@ -46,17 +59,30 @@ function getApi() { //
     todayWind.textContent = 'Wind speed: ' + data.wind.speed;
     todayIcon = data.weather[0].icon;
     console.log(todayIcon)
-  })
-  
-  
+    var latitude = data.coord.lat
+    var longitude = data.coord.lon
+    
+    console.log(latitude)
+    console.log(longitude)
+    
+    getUVindex(latitude, longitude) // Take data from this call and implement it into another function.
+  })  
 }
 
+
+//---------------------------- END OF FUNCTION GETAPI ---------------------------
+
+
+//----------------------------- GRAB DATA FOR 5 DAY FORECAST  ----------------------
+
+// -------------------------- Grab Dates for getApi5day function ------------------
 function makeDate(){
   for (i=1; i < 6; i++) {
     retrieveDate = moment().add(i,"days").format('MM/DD/YY')
     console.log(retrieveDate);
   }
 }
+
 
 function getApi5day() {
   input = inputKey.value
@@ -69,7 +95,7 @@ function getApi5day() {
   .then(function (data) {
     console.log(`${inputKey.value} five day forecast`)
     console.log(data)
-// creates the next five dates from today
+  // creates the next five dates from today
     var count = 0
     for(i=0; i<5; i++) {
       count= count + 1
@@ -80,6 +106,7 @@ function getApi5day() {
       forecastDates.push(retrieveDate)
     }
     var arrayIndex = 0
+
   // CREATE THE CONTENT BOXES FOR THE FIVE DAY FORECAST W/ INFORMATION.
     for( i = 0; i < 40 ; i += 8) {
         
@@ -93,7 +120,7 @@ function getApi5day() {
       var createDay = document.createElement('div')
       createDay.setAttribute("class", 'col border border-4 forecastBox rounded box')
       var createTemp = document.createElement('p')
-      createTemp.textContent = 'Temperature: ' + data.list[i].main.temp + ' Fahrenheit'
+      createTemp.textContent = 'Temperature: ' + data.list[i].main.temp + ' °F'
       console.log(createTemp)
       var createHumidity = document.createElement('p')
       createHumidity.textContent = 'Humidity: ' + data.list[i].main.humidity + '%'
@@ -112,6 +139,7 @@ function getApi5day() {
 
 }
 
+// ------------------------- END OF 5 DAY FORECAST FUNCTION -------------------------
 
 // whenever side bar item clicked, value runs through getAPI
 searchHistory.onclick = function(event) {
@@ -140,4 +168,3 @@ function createSearchHistory() {
 
 searchButton.addEventListener('click', getApi);
 searchButton.addEventListener('click', getApi5day)
-
