@@ -16,19 +16,21 @@ console.log(currentDay);
 
 // ------------------------ retrieve weather data from API --------------------
 
+
+
+
 function getApi(input) { //
-
-  input = inputKey.value // 
+  input = inputKey.value //
   createSearchHistory() // --Save the input into the search column for future reference
-
+  
   fetch(`https://api.openweathermap.org/data/2.5/weather?q=${input}&appid=dae35eafecabbca38e28c2fc1f8371c6&units=imperial`)
   .then(function (response) {
     return response.json();
   })
   .then(function (data) {
-    console.log(`${input} raw data: `);
+    console.log(`${input} raw data: `)
+    console.log(typeof input)
     
-
     searchCity.textContent = input; //
     todayDate.textContent = currentDay;
     todayTemp.textContent = 'Temperature: ' + data.main.temp;
@@ -37,10 +39,9 @@ function getApi(input) { //
     todayIcon = data.weather[0].icon;
     console.log(todayIcon)
   })
-
+  
   
 }
-
 
 
 // whenever side bar item clicked, value runs through getAPI

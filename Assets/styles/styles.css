@@ -27,8 +27,10 @@
 
 
 header {
-    background-color: var(--bs-purple);
-     color: var(--bs-white) 
+    background-color: var(--bs-primary);
+    color: var(--bs-white);
+    padding-bottom: 10px;
+    margin-bottom: 30px;
 }
 
 body {
@@ -39,12 +41,20 @@ body {
     background-color: var(--bs-white);
 } 
 
+#searchHeader {
+    padding-top: 10px;
+    margin-bottom: 20px;
+}
+
 #todayInfo {
     border: solid var(--bs-gray-dark);
 }
+.city:first-letter {
+    text-transform: capitalize;
+}
 
 .forecastBox {
-    background-color: var(--bs-purple);
+    background-color: var(--bs-primary);
 }
 
 .fivedayHeaders {
