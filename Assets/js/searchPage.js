@@ -34,14 +34,25 @@ function getUVindex(input1, input2) {
   .then(function (data) {
     console.log(data)
     var UVindex = data.current.uvi
+    // if(UVindex > 3 || UVindex <=5) {
+    //   todayUV.setAttribute('style', 'color:green; ')
+    // } else if(UVindex > 5 || UVindex <= 7) {
+    //   todayUV.setAttribute('style', 'color:yellow; ')
+    // } else if(UVindex > 7 || UVindex <= 10) {
+    //   todayUV.setAttribute('style', 'color:red; ')
+    // } else if(UVindex > 10) {
+    //   todayUV.setAttribute('style', 'color:purple; ')
+    // } else {
+    //   todayUV.setAttribute('style', 'color:black; ')
+    // }
     todayUV.textContent = 'UV index: ' + UVindex; 
     return UVindex;
   })
 }
 
 // Get Data for inputKey.value
-function getApi() { //
-  
+function getApi(input) { //
+  input = inputKey.value
   createSearchHistory() // --Save the input into the search column for future reference
   //getUVindex()
   fetch(`https://api.openweathermap.org/data/2.5/weather?q=${inputKey.value}&appid=dae35eafecabbca38e28c2fc1f8371c6&units=imperial`)
@@ -66,6 +77,7 @@ function getApi() { //
     console.log(longitude)
     
     getUVindex(latitude, longitude) // Take data from this call and implement it into another function.
+    inputKey.value = ''
   })  
 }
 
@@ -84,7 +96,7 @@ function makeDate(){
 }
 
 
-function getApi5day() {
+function getApi5day(input) {
   input = inputKey.value
   fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${input}&appid=dae35eafecabbca38e28c2fc1f8371c6&units=imperial`)
   .then(function (response) {
@@ -106,11 +118,10 @@ function getApi5day() {
       forecastDates.push(retrieveDate)
     }
     var arrayIndex = 0
-
+    forecastRow.innerHTML = ''
   // CREATE THE CONTENT BOXES FOR THE FIVE DAY FORECAST W/ INFORMATION.
     for( i = 0; i < 40 ; i += 8) {
         
-      
       
       
       var createDate = document.createElement('h3')
@@ -118,7 +129,7 @@ function getApi5day() {
       createDate.textContent = forecastDates[arrayIndex]
       console.log(createDate.textContent)
       var createDay = document.createElement('div')
-      createDay.setAttribute("class", 'col border border-4 forecastBox rounded box')
+      createDay.setAttribute("class", 'col border border-4 forecastBox rounded box oneTimeRemove')
       var createTemp = document.createElement('p')
       createTemp.textContent = 'Temperature: ' + data.list[i].main.temp + ' °F'
       console.log(createTemp)
@@ -145,7 +156,8 @@ function getApi5day() {
 searchHistory.onclick = function(event) {
   console.log(event.target.textContent)
   inputKey.value = event.target.textContent
-  getApi()
+  getApi(inputKey.value)
+  getApi5day(inputKey.value)
 }  
 // var savedCitySearch = localStorage.getItem('searchHistory')
 
