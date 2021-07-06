@@ -36,11 +36,11 @@ function getUVindex(input1, input2) {
   .then(function (data) {
     console.log(data)
     var UVindex = data.current.uvi
-    if(UVindex > 3 || UVindex <=5) {
+    if(UVindex > 3 && UVindex <=5) {
       todayUV.setAttribute('style', 'color:green; ')
-    } else if(UVindex > 5 || UVindex <= 7) {
+    } else if(UVindex > 5 && UVindex <= 7) {
       todayUV.setAttribute('style', 'color:yellow; ')
-    } else if(UVindex > 7 || UVindex <= 10) {
+    } else if(UVindex > 7 && UVindex <= 10) {
       todayUV.setAttribute('style', 'color:red; ')
     } else if(UVindex > 10) {
       todayUV.setAttribute('style', 'color:purple; ')
@@ -178,6 +178,7 @@ function createSearchHistory() {
   
   
   for(i=0; i < localStorage.length; i++) {
+    localStorage.setItem(i, inputKey.value)
     console.log(localStorage.getItem(localStorage.key[i]))
     var createCity = document.createElement('button')
     createCity.value = localStorage.getItem(i)
@@ -185,7 +186,6 @@ function createSearchHistory() {
     console.log(createCity.value)
     searchHistory.appendChild(createCity) 
   }
-  localStorage.setItem(i, inputKey.value)
 
 
 
