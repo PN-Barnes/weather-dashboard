@@ -35,6 +35,7 @@ header {
 
 body {
     background-color: var(--bs-dark);
+    font-weight: bolder;
 }
 
  #sideSearch{

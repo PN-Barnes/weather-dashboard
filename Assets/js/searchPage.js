@@ -138,6 +138,9 @@ function getApi5day(input) {
       console.log(createDate.textContent)
       var createDay = document.createElement('div')
       createDay.setAttribute("class", 'col border border-4 forecastBox rounded box oneTimeRemove')
+      var createIcon = document.createElement('img')
+      var fiveIconSrc = 'https://openweathermap.org/img/wn/' + fiveIcons + '@2x.png'
+      createIcon.setAttribute('src', fiveIconSrc)
       var createTemp = document.createElement('p')
       createTemp.textContent = 'Temperature: ' + data.list[i].main.temp + ' °F'
       console.log(createTemp)
@@ -147,6 +150,7 @@ function getApi5day(input) {
 
       forecastRow.appendChild(createDay)
       createDay.appendChild(createDate)
+      createDay.appendChild(createIcon);
       createDay.appendChild(createTemp)
       createDay.appendChild(createHumidity)
 
