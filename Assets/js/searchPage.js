@@ -17,7 +17,8 @@ console.log(currentDay);
 var retrieveDate;
 var forecastDates = []
 var forecastRow = document.getElementById('contentRow')
-
+var createImg = document.getElementById('jumboIcon')
+createImg.style.display = 'none'
 
 // icon URL http://openweathermap.org/img/wn/10d@2x.png 
 
@@ -72,9 +73,8 @@ function getApi(input) { //
     todayWind.textContent = 'Wind speed: ' + data.wind.speed;
     var IconIndex = data.weather[0].icon;
     var todayIconSrc = 'https://openweathermap.org/img/wn/' + IconIndex + '@2x.png'
-    var createImg = document.createElement('img')
     createImg.setAttribute('src', todayIconSrc)
-    JumboHeader.appendChild(createImg)
+    createImg.style.display = "initial"
     // todayIcon.setAttribute('src', todayIconSrc )
     console.log(todayIcon)
     var latitude = data.coord.lat
@@ -129,7 +129,8 @@ function getApi5day(input) {
   // CREATE THE CONTENT BOXES FOR THE FIVE DAY FORECAST W/ INFORMATION.
     for( i = 0; i < 40 ; i += 8) {
         
-      
+      var fiveIcons = data.list[i].weather[0].icon
+      console.log(fiveIcons)
       
       var createDate = document.createElement('h3')
       createDate.setAttribute('class', 'text-center border border-4 fivedayHeaders')
