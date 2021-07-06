@@ -56,14 +56,13 @@ function getUVindex(input1, input2) {
 
 function getApi(input) { //
   input = inputKey.value
-  createSearchHistory() // --Save the input into the search column for future reference
   //getUVindex()
   fetch(`https://api.openweathermap.org/data/2.5/weather?q=${inputKey.value}&appid=dae35eafecabbca38e28c2fc1f8371c6&units=imperial`)
   .then(function (response) {
     return response.json();
   })
   .then(function (data) {
-    console.log(`${inputKey.value} raw data: `)
+    // console.log(`${inputKey.value} raw data: `)
     console.log(data)
     
     searchCity.textContent = inputKey.value; //
@@ -76,13 +75,13 @@ function getApi(input) { //
     createImg.setAttribute('src', todayIconSrc)
     createImg.style.display = "initial"
     // todayIcon.setAttribute('src', todayIconSrc )
-    console.log(todayIcon)
     var latitude = data.coord.lat
     var longitude = data.coord.lon
     
-    console.log(latitude)
-    console.log(longitude)
+    // console.log(latitude)
+    // console.log(longitude)
     
+    createSearchHistory() // --Save the input into the search column for future reference
     getUVindex(latitude, longitude) // Take data from this call and implement it into another function.
     inputKey.value = ''
   })  
@@ -112,16 +111,16 @@ function getApi5day(input) {
 
   })
   .then(function (data) {
-    console.log(`${inputKey.value} five day forecast`)
+    // console.log(`${inputKey.value} five day forecast`)
     console.log(data)
   // creates the next five dates from today
     var count = 0
     for(i=0; i<5; i++) {
       count= count + 1
-      console.log(count)
+      // console.log(count)
       retrieveDate = moment().add(count,"days").format('MM/DD/YY');
-      console.log(typeof retrieveDate)
-      console.log(retrieveDate);
+      // console.log(typeof retrieveDate)
+      // console.log(retrieveDate);
       forecastDates.push(retrieveDate)
     }
     var arrayIndex = 0
@@ -130,12 +129,12 @@ function getApi5day(input) {
     for( i = 0; i < 40 ; i += 8) {
         
       var fiveIcons = data.list[i].weather[0].icon
-      console.log(fiveIcons)
+      // console.log(fiveIcons)
       
       var createDate = document.createElement('h3')
       createDate.setAttribute('class', 'text-center border border-4 fivedayHeaders')
       createDate.textContent = forecastDates[arrayIndex]
-      console.log(createDate.textContent)
+      // console.log(createDate.textContent)
       var createDay = document.createElement('div')
       createDay.setAttribute("class", 'col border border-4 forecastBox rounded box oneTimeRemove')
       var createIcon = document.createElement('img')
@@ -143,10 +142,10 @@ function getApi5day(input) {
       createIcon.setAttribute('src', fiveIconSrc)
       var createTemp = document.createElement('p')
       createTemp.textContent = 'Temperature: ' + data.list[i].main.temp + ' °F'
-      console.log(createTemp)
+      // console.log(createTemp)
       var createHumidity = document.createElement('p')
       createHumidity.textContent = 'Humidity: ' + data.list[i].main.humidity + '%'
-      console.log(createHumidity)
+      // console.log(createHumidity)
 
       forecastRow.appendChild(createDay)
       createDay.appendChild(createDate)
@@ -171,23 +170,25 @@ searchHistory.onclick = function(event) {
   getApi(inputKey.value)
   getApi5day(inputKey.value)
 }  
-// var savedCitySearch = localStorage.getItem('searchHistory')
 
 
 // save input to side column and store within local storage
 function createSearchHistory() {
+  
+  
+  
+  for(i=0; i < localStorage.length; i++) {
+    console.log(localStorage.getItem(localStorage.key[i]))
+    var createCity = document.createElement('button')
+    createCity.value = localStorage.getItem(i)
+    createCity.setAttribute("class", "btn btn-outline-secondary btn-lg col-12")
+    console.log(createCity.value)
+    searchHistory.appendChild(createCity) 
+  }
+  localStorage.setItem(i, inputKey.value)
 
-  createCity = document.createElement('button')
-  createCity.textContent = inputKey.value
-  createCity.setAttribute("class", "btn btn-outline-secondary btn-lg col-12")
-  console.log(createCity.value)
-  searchHistory.appendChild(createCity)
 
 
-
-  localStorage.setItem('searchHistoy', createCity)
-
-  localStorage
 }
 
 searchButton.addEventListener('click', getApi);
