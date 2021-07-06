@@ -10,7 +10,8 @@ var todayTemp = document.getElementById('todayTemp')
 var todayHumidity = document.getElementById('todayHumidity')
 var todayWind = document.getElementById('todayWind')
 var todayUV = document.getElementById('todayUV')
-var todayIcon = document.getElementById('icon')
+var JumboHeader = document.getElementById('jumbotronHeader')
+var todayIcon = document.getElementById('TodayIconDisplay')
 var searchHistory = document.getElementById('previousCitySearch')
 console.log(currentDay);
 var retrieveDate;
@@ -18,7 +19,7 @@ var forecastDates = []
 var forecastRow = document.getElementById('contentRow')
 
 
-
+// icon URL http://openweathermap.org/img/wn/10d@2x.png 
 
 
 
@@ -34,23 +35,24 @@ function getUVindex(input1, input2) {
   .then(function (data) {
     console.log(data)
     var UVindex = data.current.uvi
-    // if(UVindex > 3 || UVindex <=5) {
-    //   todayUV.setAttribute('style', 'color:green; ')
-    // } else if(UVindex > 5 || UVindex <= 7) {
-    //   todayUV.setAttribute('style', 'color:yellow; ')
-    // } else if(UVindex > 7 || UVindex <= 10) {
-    //   todayUV.setAttribute('style', 'color:red; ')
-    // } else if(UVindex > 10) {
-    //   todayUV.setAttribute('style', 'color:purple; ')
-    // } else {
-    //   todayUV.setAttribute('style', 'color:black; ')
-    // }
+    if(UVindex > 3 || UVindex <=5) {
+      todayUV.setAttribute('style', 'color:green; ')
+    } else if(UVindex > 5 || UVindex <= 7) {
+      todayUV.setAttribute('style', 'color:yellow; ')
+    } else if(UVindex > 7 || UVindex <= 10) {
+      todayUV.setAttribute('style', 'color:red; ')
+    } else if(UVindex > 10) {
+      todayUV.setAttribute('style', 'color:purple; ')
+    } else {
+      todayUV.setAttribute('style', 'color:black; ')
+    }
     todayUV.textContent = 'UV index: ' + UVindex; 
     return UVindex;
   })
 }
 
-// Get Data for inputKey.value
+// --------------------- Get Data for inputKey.value -------------------------------
+
 function getApi(input) { //
   input = inputKey.value
   createSearchHistory() // --Save the input into the search column for future reference
@@ -68,7 +70,12 @@ function getApi(input) { //
     todayTemp.textContent = 'Temperature: ' + data.main.temp;
     todayHumidity.textContent = 'Humidity: ' + data.main.humidity +'%';
     todayWind.textContent = 'Wind speed: ' + data.wind.speed;
-    todayIcon = data.weather[0].icon;
+    var IconIndex = data.weather[0].icon;
+    var todayIconSrc = 'https://openweathermap.org/img/wn/' + IconIndex + '@2x.png'
+    var createImg = document.createElement('img')
+    createImg.setAttribute('src', todayIconSrc)
+    JumboHeader.appendChild(createImg)
+    // todayIcon.setAttribute('src', todayIconSrc )
     console.log(todayIcon)
     var latitude = data.coord.lat
     var longitude = data.coord.lon
