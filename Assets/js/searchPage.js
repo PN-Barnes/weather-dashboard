@@ -13,6 +13,7 @@ var todayUV = document.getElementById('todayUV')
 var JumboHeader = document.getElementById('jumbotronHeader')
 var todayIcon = document.getElementById('TodayIconDisplay')
 var searchHistory = document.getElementById('previousCitySearch')
+var prevCities = localStorage.getItem('cities') || [];
 console.log(currentDay);
 var retrieveDate;
 var forecastDates = []
@@ -21,9 +22,6 @@ var createImg = document.getElementById('jumboIcon')
 createImg.style.display = 'none'
 
 // icon URL http://openweathermap.org/img/wn/10d@2x.png 
-
-
-
 // ------------------------ retrieve weather data from API --------------------
 
 
@@ -80,8 +78,17 @@ function getApi(input) { //
     
     // console.log(latitude)
     // console.log(longitude)
-    
-    createSearchHistory() // --Save the input into the search column for future reference
+    prevCities.push(inputKey.value)
+    console.log(prevCities)
+    for(i=0; i< prevCities.length; i++) {
+      var createButton = document.createElement('button')
+      createButton.setAttribute('class', 'btn btn-outline-secondary btn-lg col-12')
+      createButton.value = prevCities[i]
+      console.log(createButton.value)
+      searchHistory.appendChild(createButton)
+    }
+    localStorage.setItem('cities', input)
+    //createSearchHistory() // --Save the input into the search column for future reference
     getUVindex(latitude, longitude) // Take data from this call and implement it into another function.
     inputKey.value = ''
   })  
@@ -165,31 +172,30 @@ function getApi5day(input) {
 
 // whenever side bar item clicked, value runs through getAPI
 searchHistory.onclick = function(event) {
-  console.log(event.target.textContent)
-  inputKey.value = event.target.textContent
-  getApi(inputKey.value)
-  getApi5day(inputKey.value)
+  console.log(event.target.value)
+  var clickedCity = event.target.value
+  getApi(clickedCity)
 }  
 
 
 // save input to side column and store within local storage
-function createSearchHistory() {
+// function createSearchHistory() {
   
   
   
-  for(i=0; i < localStorage.length; i++) {
-    localStorage.setItem(i, inputKey.value)
-    console.log(localStorage.getItem(localStorage.key[i]))
-    var createCity = document.createElement('button')
-    createCity.value = localStorage.getItem(i)
-    createCity.setAttribute("class", "btn btn-outline-secondary btn-lg col-12")
-    console.log(createCity.value)
-    searchHistory.appendChild(createCity) 
-  }
+//   for(i=0; i < localStorage.length; i++) {
+//     localStorage.setItem(i, inputKey.value)
+//     console.log(localStorage.getItem(localStorage.key[i]))
+//     var createCity = document.createElement('button')
+//     createCity.value = localStorage.getItem(i)
+//     createCity.setAttribute("class", "btn btn-outline-secondary btn-lg col-12")
+//     console.log(createCity.value)
+//     searchHistory.appendChild(createCity) 
+//   }
 
 
 
-}
+// }
 
 searchButton.addEventListener('click', getApi);
 searchButton.addEventListener('click', getApi5day)
