@@ -13,8 +13,6 @@ var todayUV = document.getElementById('todayUV')
 var JumboHeader = document.getElementById('jumbotronHeader')
 var todayIcon = document.getElementById('TodayIconDisplay')
 var searchHistory = document.getElementById('previousCitySearch')
-var prevCities = localStorage.getItem('cities') || [];
-console.log(prevCities)
 console.log(currentDay);
 var retrieveDate;
 var forecastDates = []
@@ -22,11 +20,17 @@ var forecastRow = document.getElementById('contentRow')
 var createImg = document.getElementById('jumboIcon')
 createImg.style.display = 'none'
 
+var prevCities
+if(localStorage.getItem("cities")){
+  prevCities = JSON.parse(localStorage.getItem("cities"))
+} else {
+  prevCities = []
+}
+
+localStorage.clear()
+createSearchHistory()
 // icon URL http://openweathermap.org/img/wn/10d@2x.png 
 // ------------------------ retrieve weather data from API --------------------
-
-
-
 function getUVindex(input1, input2) {  
   fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${input1}&lon=${input2}&appid=dae35eafecabbca38e28c2fc1f8371c6`)
   .then(function (response) {
@@ -50,17 +54,15 @@ function getUVindex(input1, input2) {
     return UVindex;
   })
 }
-
 // --------------------- Get Data for inputKey.value -------------------------------
-
 function getApi(input) { //
   input = inputKey.value
-  //getUVindex()
   fetch(`https://api.openweathermap.org/data/2.5/weather?q=${inputKey.value}&appid=dae35eafecabbca38e28c2fc1f8371c6&units=imperial`)
   .then(function (response) {
     return response.json();
   })
   .then(function (data) {
+    // --Save the input into the search column for future reference
     // console.log(`${inputKey.value} raw data: `)
     console.log(data)
     
@@ -77,25 +79,14 @@ function getApi(input) { //
     var latitude = data.coord.lat
     var longitude = data.coord.lon
     
-    // console.log(latitude)
-    // console.log(longitude)
-    JSON.parse(prevCities).push(inputKey.value)
-    console.log(prevCities)
-    for(i=0; i< prevCities.length; i++) {
-      var createButton = document.createElement('button')
-      createButton.setAttribute('class', 'btn btn-outline-secondary btn-lg col-12')
-      createButton.value = prevCities[i]
-      console.log(createButton.value)
-      searchHistory.appendChild(createButton)
-    }
-    localStorage.setItem('cities', JSON.stringify(prevCities))
-    //createSearchHistory() // --Save the input into the search column for future reference
+    prevCities.push(inputKey.value)
+    console.log(prevCities)
+    localStorage.setItem("cities", JSON.stringify(prevCities))
     getUVindex(latitude, longitude) // Take data from this call and implement it into another function.
+    createSearchHistory()
     inputKey.value = ''
   })  
 }
-
-
 //---------------------------- END OF FUNCTION GETAPI ---------------------------
 
 
@@ -108,6 +99,7 @@ function makeDate(){
   }
 }
 
+
 //----------------------------- GRAB DATA FOR 5 DAY FORECAST  ----------------------
 
 function getApi5day(input) {
@@ -116,7 +108,6 @@ function getApi5day(input) {
   .then(function (response) {
     console.log(response)
     return response.json();
-    
   })
   .then(function (data) {
     // console.log(`${inputKey.value} five day forecast`)
@@ -140,6 +131,7 @@ function getApi5day(input) {
       // console.log(fiveIcons)
       
       var createDate = document.createElement('h3')
+      createDate.setAttribute('class', 'text-center border border-4 fivedayHeaders')
       createDate.setAttribute('class', 'text-center fivedayHeaders')
       createDate.textContent = forecastDates[arrayIndex]
       // console.log(createDate.textContent)
@@ -154,49 +146,40 @@ function getApi5day(input) {
       var createHumidity = document.createElement('p')
       createHumidity.textContent = 'Humidity: ' + data.list[i].main.humidity + '%'
       // console.log(createHumidity)
-      
       forecastRow.appendChild(createDay)
       createDay.appendChild(createDate)
       createDay.appendChild(createIcon);
       createDay.appendChild(createTemp)
       createDay.appendChild(createHumidity)
-      
-      
       arrayIndex++ // increment the index number to grab next date
     }
   })
-  
-  
 }
-
 // ------------------------- END OF 5 DAY FORECAST FUNCTION -------------------------
-
 // whenever side bar item clicked, value runs through getAPI
 searchHistory.onclick = function(event) {
   console.log(event.target.value)
-  var clickedCity = event.target.value
-  getApi(clickedCity)
+
+  inputKey.value = event.target.textContent
+  getApi(inputKey.value)
+  getApi5day(inputKey.value)
+  searchHistory.innerHTML = ''
+  createSearchHistory()
 }  
-
-
 // save input to side column and store within local storage
 // function createSearchHistory() {
-  
-  
-  
-  //   for(i=0; i < localStorage.length; i++) {
-    //     localStorage.setItem(i, inputKey.value)
-    //     console.log(localStorage.getItem(localStorage.key[i]))
-//     var createCity = document.createElement('button')
-//     createCity.value = localStorage.getItem(i)
-//     createCity.setAttribute("class", "btn btn-outline-secondary btn-lg col-12")
-//     console.log(createCity.value)
-//     searchHistory.appendChild(createCity) 
-//   }
-
-
-
-// }
-
-searchButton.addEventListener('click', getApi);
-searchButton.addEventListener('click', getApi5day)
+  //   for(i)
+  // }
+  searchButton.addEventListener('click', getApi);
+  searchButton.addEventListener('click', getApi5day)
+  function createSearchHistory() {
+    searchHistory.innerHTML = ''
+    for(i=0; i< prevCities.length; i++) {
+      var createButton = document.createElement('button')
+      createButton.setAttribute('class', 'btn btn-outline-secondary btn-lg col-12')
+      createButton.value = prevCities[i]
+      createButton.textContent = createButton.value
+      console.log(createButton.value)
+      searchHistory.appendChild(createButton)
+    }
+  }
