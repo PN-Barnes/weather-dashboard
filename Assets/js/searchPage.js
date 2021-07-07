@@ -13,7 +13,7 @@ var todayUV = document.getElementById('todayUV')
 var JumboHeader = document.getElementById('jumbotronHeader')
 var todayIcon = document.getElementById('TodayIconDisplay')
 var searchHistory = document.getElementById('previousCitySearch')
-var prevCities = localStorage.getItem('cities') || [];
+var prevCities = JSON.parse(localStorage.getItem('cities')) || [];
 console.log(currentDay);
 var retrieveDate;
 var forecastDates = []
@@ -87,7 +87,7 @@ function getApi(input) { //
       console.log(createButton.value)
       searchHistory.appendChild(createButton)
     }
-    localStorage.setItem('cities', input)
+    localStorage.setItem('cities', JSON.stringify(prevCities))
     //createSearchHistory() // --Save the input into the search column for future reference
     getUVindex(latitude, longitude) // Take data from this call and implement it into another function.
     inputKey.value = ''
@@ -115,12 +115,12 @@ function getApi5day(input) {
   .then(function (response) {
     console.log(response)
     return response.json();
-
+    
   })
   .then(function (data) {
     // console.log(`${inputKey.value} five day forecast`)
     console.log(data)
-  // creates the next five dates from today
+    // creates the next five dates from today
     var count = 0
     for(i=0; i<5; i++) {
       count= count + 1
@@ -132,9 +132,9 @@ function getApi5day(input) {
     }
     var arrayIndex = 0
     forecastRow.innerHTML = ''
-  // CREATE THE CONTENT BOXES FOR THE FIVE DAY FORECAST W/ INFORMATION.
+    // CREATE THE CONTENT BOXES FOR THE FIVE DAY FORECAST W/ INFORMATION.
     for( i = 0; i < 40 ; i += 8) {
-        
+      
       var fiveIcons = data.list[i].weather[0].icon
       // console.log(fiveIcons)
       
@@ -153,19 +153,19 @@ function getApi5day(input) {
       var createHumidity = document.createElement('p')
       createHumidity.textContent = 'Humidity: ' + data.list[i].main.humidity + '%'
       // console.log(createHumidity)
-
+      
       forecastRow.appendChild(createDay)
       createDay.appendChild(createDate)
       createDay.appendChild(createIcon);
       createDay.appendChild(createTemp)
       createDay.appendChild(createHumidity)
-
-
+      
+      
       arrayIndex++ // increment the index number to grab next date
     }
   })
-
-
+  
+  
 }
 
 // ------------------------- END OF 5 DAY FORECAST FUNCTION -------------------------
@@ -183,9 +183,9 @@ searchHistory.onclick = function(event) {
   
   
   
-//   for(i=0; i < localStorage.length; i++) {
-//     localStorage.setItem(i, inputKey.value)
-//     console.log(localStorage.getItem(localStorage.key[i]))
+  //   for(i=0; i < localStorage.length; i++) {
+    //     localStorage.setItem(i, inputKey.value)
+    //     console.log(localStorage.getItem(localStorage.key[i]))
 //     var createCity = document.createElement('button')
 //     createCity.value = localStorage.getItem(i)
 //     createCity.setAttribute("class", "btn btn-outline-secondary btn-lg col-12")
