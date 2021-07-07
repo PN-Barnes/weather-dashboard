@@ -52,8 +52,8 @@ p {
 
 #todayInfo {
     border: solid var(--bs-gray-dark);
-    background-color: var(--bs-yellow);
-    color: black;
+    background-color: var(--bs-white);
+    color: var(--bs-dark);
 }
 .city:first-letter {
     text-transform: capitalize;
@@ -64,10 +64,14 @@ p {
 }
 
 .fivedayHeaders {
-    background-color: var(--bs-white);
-    color: var(--bs-gray-dark);
+    background-color: var(--bs-primary);
+    color: var(--bs-white);
 }
 
 .box {
     color: var(--bs-white);
+}
+
+.jumbotron {
+    background-color: var(--bs-white);
 }

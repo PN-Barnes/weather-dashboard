@@ -132,7 +132,7 @@ function getApi5day(input) {
       // console.log(fiveIcons)
       
       var createDate = document.createElement('h3')
-      createDate.setAttribute('class', 'text-center border border-4 fivedayHeaders')
+      createDate.setAttribute('class', 'text-center fivedayHeaders')
       createDate.textContent = forecastDates[arrayIndex]
       // console.log(createDate.textContent)
       var createDay = document.createElement('div')
