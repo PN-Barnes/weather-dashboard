@@ -52,8 +52,8 @@ p {
 
 #todayInfo {
     border: solid var(--bs-gray-dark);
-    background-color: var(--bs-dark);
-    color: var(--bs-light);
+    background-color: var(--bs-white);
+    color: var(--bs-gray-dark);
 }
 .city:first-letter {
     text-transform: capitalize;
