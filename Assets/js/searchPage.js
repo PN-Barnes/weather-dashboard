@@ -22,9 +22,9 @@ createImg.style.display = 'none'
 
 var prevCities
 if(localStorage.getItem("cities")){
-  prevCities = JSON.parse(localStorage.getItem("cities"))
+  prevCities = JSON.parse(localStorage.getItem("cities"))
 } else {
-  prevCities = []
+  prevCities = []
 }
 
 localStorage.clear()
@@ -79,8 +79,8 @@ function getApi(input) { //
     var latitude = data.coord.lat
     var longitude = data.coord.lon
     
-    prevCities.push(inputKey.value)
-    console.log(prevCities)
+    prevCities.push(inputKey.value)
+    console.log(prevCities)
     localStorage.setItem("cities", JSON.stringify(prevCities))
     getUVindex(latitude, longitude) // Take data from this call and implement it into another function.
     createSearchHistory()
