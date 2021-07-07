@@ -13,7 +13,7 @@ var todayUV = document.getElementById('todayUV')
 var JumboHeader = document.getElementById('jumbotronHeader')
 var todayIcon = document.getElementById('TodayIconDisplay')
 var searchHistory = document.getElementById('previousCitySearch')
-var prevCities = JSON.parse(localStorage.getItem('cities')) || [];
+var prevCities = localStorage.getItem('cities') || [];
 console.log(prevCities)
 console.log(currentDay);
 var retrieveDate;
@@ -79,7 +79,7 @@ function getApi(input) { //
     
     // console.log(latitude)
     // console.log(longitude)
-    prevCities.push(inputKey.value)
+    JSON.parse(prevCities).push(inputKey.value)
     console.log(prevCities)
     for(i=0; i< prevCities.length; i++) {
       var createButton = document.createElement('button')
