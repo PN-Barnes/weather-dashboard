@@ -14,6 +14,7 @@ var JumboHeader = document.getElementById('jumbotronHeader')
 var todayIcon = document.getElementById('TodayIconDisplay')
 var searchHistory = document.getElementById('previousCitySearch')
 var prevCities = JSON.parse(localStorage.getItem('cities')) || [];
+console.log(prevCities)
 console.log(currentDay);
 var retrieveDate;
 var forecastDates = []
@@ -98,7 +99,6 @@ function getApi(input) { //
 //---------------------------- END OF FUNCTION GETAPI ---------------------------
 
 
-//----------------------------- GRAB DATA FOR 5 DAY FORECAST  ----------------------
 
 // -------------------------- Grab Dates for getApi5day function ------------------
 function makeDate(){
@@ -108,6 +108,7 @@ function makeDate(){
   }
 }
 
+//----------------------------- GRAB DATA FOR 5 DAY FORECAST  ----------------------
 
 function getApi5day(input) {
   input = inputKey.value
